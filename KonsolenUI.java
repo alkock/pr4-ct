@@ -7,6 +7,7 @@ public class KonsolenUI extends MetrikObserver{
     Map<Metrik, Boolean> welcheMetriken;
 
     public KonsolenUI() {
+        observers.add(this);
         welcheMetriken = new HashMap<Metrik, Boolean>();
         welcheMetriken.put(Metrik.MMBÜ, false);
         welcheMetriken.put(Metrik.MCDC, false);
@@ -127,6 +128,7 @@ public class KonsolenUI extends MetrikObserver{
 
     @Override
     public void update(MetrikObserver vonWem, Metrik metrik, int[][] aufgabe) {
+        if(vonWem == this) return;
 
     }
 
