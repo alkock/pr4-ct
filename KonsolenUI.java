@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class KonsolenUI extends MetrikObserver {
+
+    CoverageCalc coverageCalc;
     Map<Metrik, Boolean> welcheMetriken;
     Map<Metrik, Boolean> metrikenBerechnet;
 
@@ -12,6 +14,7 @@ public class KonsolenUI extends MetrikObserver {
 
 
     public KonsolenUI() {
+        coverageCalc = new CoverageCalc();
         observers.add(this);
         welcheMetriken = new HashMap<Metrik, Boolean>();
         welcheMetriken.put(Metrik.MMBÜ, false);
@@ -77,7 +80,12 @@ public class KonsolenUI extends MetrikObserver {
                 hauptmenu();
                 break;
             case 3:
-                welcheMetriken.put(Metrik.EBÜ, !welcheMetriken.get(Metrik.EBÜ));
+                System.out.println("Metrik EBÜ leider nicht möglich!");
+                try{
+                    Thread.sleep(2000);
+                }
+                catch(InterruptedException ex){
+                }
                 hauptmenu();
                 break;
             case 4:
@@ -139,7 +147,7 @@ public class KonsolenUI extends MetrikObserver {
         {
             System.out.println("Keine Metrik ausgewählt! Von daher bin ich jetzt fertig! :-)");
             try{
-                Thread.sleep(5000);
+                Thread.sleep(2000);
             }
             catch(InterruptedException io){
 
@@ -153,17 +161,17 @@ public class KonsolenUI extends MetrikObserver {
     public void update(MetrikObserver vonWem, Metrik metrik, int[][] aufgabe) {
         if (vonWem == this) return;
 
-        if (metrik == Metrik.MMBÜ && vonWem == null) {
+        if (metrik == Metrik.MMBÜ) {
             metrikenBerechnet.put(Metrik.MMBÜ, true);
             berchneteMetriken.put(Metrik.MMBÜ, aufgabe);
             checkObAllesReturnt();
         }
-        if (metrik == Metrik.EBÜ && vonWem == null) {
+        if (metrik == Metrik.EBÜ) {
             metrikenBerechnet.put(Metrik.EBÜ, true);
             berchneteMetriken.put(Metrik.EBÜ, aufgabe);
             checkObAllesReturnt();
         }
-        if (metrik == Metrik.MCDC && vonWem == null) {
+        if (metrik == Metrik.MCDC) {
             metrikenBerechnet.put(Metrik.MCDC, true);
             berchneteMetriken.put(Metrik.MCDC, aufgabe);
             checkObAllesReturnt();

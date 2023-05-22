@@ -1,7 +1,7 @@
 public enum Metrik {
     MMBÜ, MCDC,EBÜ;
 
-    public String toString(Metrik metrik){
+    public static String toString(Metrik metrik){
         if(metrik == MMBÜ){
             return "MMBÜ";
         }

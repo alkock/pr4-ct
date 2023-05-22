@@ -1,9 +1,11 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Iterator;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Stream;
 
 public class IOWriter {
     public static int[][] readMarkdownFile(String filePath) throws IOException {
@@ -51,31 +53,136 @@ public class IOWriter {
 
         int[][] trimmedArray = new int[data.length - 2][];
         System.arraycopy(data, 2, trimmedArray, 0, data.length - 2);
+        printMatrix(trimmedArray);
+        System.out.println("---");
         return trimmedArray;
     }
 
-    public static void main(String args[])
-    {
-        write(null, "exercise1.md");
+
+    public static int countOccurrences(String input, char target) {
+        int count = 0;
+        for (char c : input.toCharArray()) {
+            if (c == target) {
+                count++;
+            }
+        }
+        return count;
     }
+
     public static void write(Map<Metrik, int[][]> errechneteMetriken, String dateiname) {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(dateiname))) {
-            String line;
-            int lineNumber = 0;
+        String[][] ursprung = readMarkdownTable(dateiname);
 
-            while ((line = br.readLine()) != null && lineNumber < 2) {
-                System.out.println(line);
-                lineNumber++;
+        int counter = errechneteMetriken.size();
+
+        System.out.println("counter: " + (counter));
+        System.out.println("ursprung.length: " + (ursprung.length));
+
+        String[][] ergebnis = new String[ursprung.length][ursprung[0].length + counter];
+        for (int i = 0; i < ursprung.length; i++) {
+            for (int j = 0; j < ursprung[i].length; j++) {
+                ergebnis[i][j] = ursprung[i][j];
             }
-        } catch (IOException e) {
-            System.err.println("Fehler beim Lesen der Datei: " + e.getMessage());
+        }
+
+        System.out.println("neues Array ganz");
+
+        IOWriter.printMatrix(ergebnis);
+        int counter2 = 0;
+
+        for (Metrik metrik : errechneteMetriken.keySet()) {
+            String gegebeneMetrik = Metrik.toString(metrik);
+            int[][] metrikArray = errechneteMetriken.get(metrik);
+            System.out.println("---");
+            IOWriter.printMatrix(metrikArray);
+            ergebnis[0][ursprung[0].length + counter2 - 1] = gegebeneMetrik;
+            ergebnis[1][ursprung[1].length + counter2 - 1] = "--";
+
+            System.out.println("metrikArray.length: " + metrikArray.length);
+
+            for (int i = 0; i <= metrikArray.length - 1; i++) {
+                ergebnis[i + 2][ursprung[0].length + counter2] = Integer.toString(metrikArray[i][metrikArray[i].length - 1]);
+            }
+            ++counter2;
         }
 
 
+        String resultdateiname = dateiname.replace(".md", "_result.md");
+        writeMarkdownTableToFile(ergebnis, resultdateiname);
 
 
+    }
 
+    private static void printMatrix(String[][] ergebnis) {
+        for (int i = 0; i < ergebnis.length; i++) {
+            for (int j = 0; j < ergebnis[i].length; j++) {
+                System.out.print(ergebnis[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void writeMarkdownTableToFile(String[][] data, String fileName) {
+        System.out.println(data[3].length);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (int row = 0; row < data.length - 1; row++) {
+                writer.write("|");
+                for (String cell : data[row]) {
+                    if (cell != null) writer.write(" " + cell + " |");
+                }
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("An error occurred while writing the file: " + e.getMessage());
+        }
+    }
+
+    public static int countLines(String fileName) {
+        int lineCount = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            while (reader.readLine() != null) {
+                lineCount++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lineCount;
+    }
+
+
+    public static String[][] readMarkdownTable(String filePath) {
+        List<String[]> lines = new ArrayList<>();
+
+        try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
+            stream.forEach(line -> {
+                // Split the line at the pipe characters, trimming whitespace
+                String[] parts = line.split("\\s*\\|\\s*");
+                // Remove empty strings at the start and end, caused by leading/trailing pipe characters
+                parts = Arrays.stream(parts)
+                        .filter(part -> !part.isEmpty())
+                        .toArray(String[]::new);
+                lines.add(parts);
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Convert the list of lines to a 2D array
+        String[][] table = new String[lines.size()][];
+        for (int i = 0; i < lines.size(); i++) {
+            table[i] = lines.get(i);
+        }
+
+        return table;
+    }
+
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int cell : row) {
+                System.out.print(cell + " ");
+            }
+            System.out.println();
+        }
     }
 }
 

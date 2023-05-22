@@ -23,6 +23,7 @@ public class CoverageCalc extends MetrikObserver{
                 }
             }
         }
+        IOWriter.printMatrix(array);
         updateObservers(this,Metrik.MCDC, array);
     }
 
