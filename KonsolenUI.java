@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class KonsolenUI {
+public class KonsolenUI extends MetrikObserver{
     Map<Metrik, Boolean> welcheMetriken;
 
     public KonsolenUI() {
@@ -112,7 +112,7 @@ public class KonsolenUI {
             {
                 if(welcheMetriken.get(metrik))
                 {
-                    MetrikObserver.updateObservers(metrik,zuErarbeitendesArray);
+                    MetrikObserver.updateObservers(this, metrik,zuErarbeitendesArray);
                 }
             }
 
@@ -124,4 +124,10 @@ public class KonsolenUI {
             dateiauswahl();
         }
     }
+
+    @Override
+    public void update(MetrikObserver vonWem, Metrik metrik, int[][] aufgabe) {
+
+    }
+
 }
