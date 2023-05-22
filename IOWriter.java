@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class IOWriter {
     public static int[][] readMarkdownFile(String filePath) throws IOException {
@@ -51,6 +54,29 @@ public class IOWriter {
         return trimmedArray;
     }
 
+    public static void main(String args[])
+    {
+        write(null, "exercise1.md");
+    }
+    public static void write(Map<Metrik, int[][]> errechneteMetriken, String dateiname) {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(dateiname))) {
+            String line;
+            int lineNumber = 0;
+
+            while ((line = br.readLine()) != null && lineNumber < 2) {
+                System.out.println(line);
+                lineNumber++;
+            }
+        } catch (IOException e) {
+            System.err.println("Fehler beim Lesen der Datei: " + e.getMessage());
+        }
+
+
+
+
+
+    }
 }
 
 

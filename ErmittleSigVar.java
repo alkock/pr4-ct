@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class ErmittleSigVar {
+public class ErmittleSigVar{
 
 
     public static void main(String[] args) {
@@ -19,6 +19,8 @@ public class ErmittleSigVar {
         esv.ermittleSignifikanteVariablen(table);
 
     }
+
+
 
 
     public int[][] ermittleSignifikanteVariablen(int[][] aufgabe)
@@ -112,6 +114,7 @@ public class ErmittleSigVar {
         }
         return -1;
     }
+
 
 }
 
