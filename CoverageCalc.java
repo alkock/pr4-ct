@@ -23,8 +23,6 @@ public class CoverageCalc extends MetrikObserver{
                 }
             }
         }
-        System.out.println("McDc: ");
-        IOWriter.printMatrix(array);
         updateObservers(this,Metrik.MCDC, array);
     }
 
@@ -42,8 +40,6 @@ public class CoverageCalc extends MetrikObserver{
                 }
             }
         }
-        System.out.println("MMBÜ: ");
-        IOWriter.printMatrix(array);
         updateObservers(this,Metrik.MMBÜ, array);
     }
 

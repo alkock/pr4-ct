@@ -53,8 +53,6 @@ public class IOWriter {
 
         int[][] trimmedArray = new int[data.length - 2][];
         System.arraycopy(data, 2, trimmedArray, 0, data.length - 2);
-        printMatrix(trimmedArray);
-        System.out.println("---");
         return trimmedArray;
     }
 
@@ -75,8 +73,7 @@ public class IOWriter {
 
         int counter = errechneteMetriken.size();
 
-        System.out.println("counter: " + (counter));
-        System.out.println("ursprung.length: " + (ursprung.length));
+
 
         String[][] ergebnis = new String[ursprung.length][ursprung[0].length + counter];
         for (int i = 0; i < ursprung.length; i++) {
@@ -85,9 +82,7 @@ public class IOWriter {
             }
         }
 
-        System.out.println("neues Array ganz");
 
-        IOWriter.printMatrix(ergebnis);
 
 
         int counter2 = 0;
@@ -95,12 +90,10 @@ public class IOWriter {
         for (Metrik metrik : errechneteMetriken.keySet()) {
             String gegebeneMetrik = Metrik.toString(metrik);
             int[][] metrikArray = errechneteMetriken.get(metrik);
-            System.out.println("---");
-            IOWriter.printMatrix(metrikArray);
+
             ergebnis[0][ursprung[0].length + counter2] = gegebeneMetrik;
             ergebnis[1][ursprung[1].length + counter2] = "--";
 
-            System.out.println("metrikArray.length: " + metrikArray.length);
 
             for (int i = 0; i <= metrikArray.length - 1; i++) {
                 ergebnis[i + 2][ursprung[0].length + counter2] = Integer.toString(metrikArray[i][metrikArray[i].length - 1]);
@@ -115,17 +108,8 @@ public class IOWriter {
 
     }
 
-    private static void printMatrix(String[][] ergebnis) {
-        for (int i = 0; i < ergebnis.length; i++) {
-            for (int j = 0; j < ergebnis[i].length; j++) {
-                System.out.print(ergebnis[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 
     public static void writeMarkdownTableToFile(String[][] data, String fileName) {
-        System.out.println(data.length);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             for (int row = 0; row < data.length; row++) {
                 writer.write("|");
@@ -135,21 +119,10 @@ public class IOWriter {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("An error occurred while writing the file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public static int countLines(String fileName) {
-        int lineCount = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            while (reader.readLine() != null) {
-                lineCount++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lineCount;
-    }
 
 
     public static String[][] readMarkdownTable(String filePath) {
@@ -176,15 +149,6 @@ public class IOWriter {
         }
 
         return table;
-    }
-
-    public static void printMatrix(int[][] matrix) {
-        for (int[] row : matrix) {
-            for (int cell : row) {
-                System.out.print(cell + " ");
-            }
-            System.out.println();
-        }
     }
 }
 
