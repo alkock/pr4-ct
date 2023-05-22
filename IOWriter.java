@@ -88,6 +88,8 @@ public class IOWriter {
         System.out.println("neues Array ganz");
 
         IOWriter.printMatrix(ergebnis);
+
+
         int counter2 = 0;
 
         for (Metrik metrik : errechneteMetriken.keySet()) {
@@ -95,8 +97,8 @@ public class IOWriter {
             int[][] metrikArray = errechneteMetriken.get(metrik);
             System.out.println("---");
             IOWriter.printMatrix(metrikArray);
-            ergebnis[0][ursprung[0].length + counter2 - 1] = gegebeneMetrik;
-            ergebnis[1][ursprung[1].length + counter2 - 1] = "--";
+            ergebnis[0][ursprung[0].length + counter2] = gegebeneMetrik;
+            ergebnis[1][ursprung[1].length + counter2] = "--";
 
             System.out.println("metrikArray.length: " + metrikArray.length);
 
@@ -123,12 +125,12 @@ public class IOWriter {
     }
 
     public static void writeMarkdownTableToFile(String[][] data, String fileName) {
-        System.out.println(data[3].length);
+        System.out.println(data.length);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (int row = 0; row < data.length - 1; row++) {
+            for (int row = 0; row < data.length; row++) {
                 writer.write("|");
                 for (String cell : data[row]) {
-                    if (cell != null) writer.write(" " + cell + " |");
+                    writer.write(" " + cell + " |");
                 }
                 writer.newLine();
             }
