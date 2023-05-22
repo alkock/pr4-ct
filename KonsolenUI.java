@@ -1,7 +1,6 @@
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class KonsolenUI extends MetrikObserver {
 
@@ -30,6 +29,23 @@ public class KonsolenUI extends MetrikObserver {
 
     }
 
+    public static List<String> scanFiles(File directory) {
+        List<String> fileNames = new ArrayList<>();
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        if (file.getName().contains(".md")) {
+                            fileNames.add(file.getName());
+                        }
+                    }
+                }
+            }
+        }
+        return fileNames;
+    }
+
     public void consoleClear() {
         for (int i = 0; i < 50; ++i) System.out.println();
     }
@@ -51,8 +67,8 @@ public class KonsolenUI extends MetrikObserver {
                         + "+---------------------------------------------------------------------------------------------------------------+-------+\n"
                         + "| MMBÜ 							                                    		 	| 1     |       | " + (((boolean) welcheMetriken.get(Metrik.MMBÜ)) ? "ja" : "nein") + " |   \n"
                         + "| MCDC									                                		| 2     |       | " + (((boolean) welcheMetriken.get(Metrik.MCDC)) ? "ja" : "nein") + " |   \n"
-                        + "| EBÜ    										                            	| 3     |       | " + (((boolean) welcheMetriken.get(Metrik.EBÜ)) ? "ja" : "nein") + " |   \n"
-                        + "| Weiter						                                                | 4     |\n"
+                        + "| Weiter mit Mehrfachauswahl    					                            | 3     |\n"
+                        + "| Weiter mit einer Datei				                                        | 4     |\n"
                         + "| Beende das Programm										            		| 5     |\n"
                         + "+---------------------------------------------------------------------------------------------------------------+-------+");
         int loop = 0;
@@ -80,16 +96,11 @@ public class KonsolenUI extends MetrikObserver {
                 hauptmenu();
                 break;
             case 3:
-                System.out.println("Metrik EBÜ leider nicht möglich!");
-                try{
-                    Thread.sleep(2000);
-                }
-                catch(InterruptedException ex){
-                }
-                hauptmenu();
+                mehrfachdateiauswahl();
                 break;
             case 4:
                 dateiauswahl();
+                break;
             case 5:
                 System.exit(0);
 
@@ -117,6 +128,7 @@ public class KonsolenUI extends MetrikObserver {
                 loop = 1;
                 aktuellerDateiname = eingabe;
                 uebergebeDaten(eingabe);
+                hauptmenu();
             } else {
                 System.out.println("Keine Korrekte Eingabe bitte erneut versuchen! Format .md wird benötigt!");
                 System.out.println("");
@@ -126,7 +138,66 @@ public class KonsolenUI extends MetrikObserver {
         }
     }
 
-    public void uebergebeDaten(String eingabe)   {
+    public void mehrfachdateiauswahl() {
+        consoleClear();
+        System.out.println("\n" +
+                "    __  ___     __       _ __  \n" +
+                "   /  |/  /__  / /______(_) /__\n" +
+                "  / /|_/ / _ \\/ __/ ___/ / //_/\n" +
+                " / /  / /  __/ /_/ /  / / ,<   \n" +
+                "/_/  /_/\\___/\\__/_/  /_/_/|_|  \n" +
+                "                               \n");
+        System.out.println("Erstellt von Leon, Marvin und Ansgar");
+        File currentDirectory = new File(".");
+        List<String> fileNames = scanFiles(currentDirectory);
+
+
+
+        System.out.println(
+                "+---------------------------------------------------------------------------------------------------------------+-------+\n"
+                        + "| Auswahl                        								                |Eingabe|       \n"
+                        + "+---------------------------------------------------------------------------------------------------------------+-------+\n");
+
+
+        for (String fileName : fileNames) {
+            System.out.println("| " + fileName + "				                                           		 	| " + fileNames.indexOf(fileName) + "              \n");
+
+        }
+        System.out.println("+---------------------------------------------------------------------------------------------------------------+-------+");
+        System.out.println("Bitte gebe nun die Nummern der Dateien an die du auswählen möchtest. (Mehrfachauswahl möglich, bitte mit Komma separieren z.B. 1,2,3)");
+        int loop = -1;
+        while (loop == -1) {
+            Scanner sc = new Scanner(System.in);
+            String eingabe = sc.next();
+            if (eingabe.matches("^\\d+(,\\d+)*$"))
+            {
+                loop = 1;
+                String[] eingabeArray = eingabe.split(",");
+                for (String s : eingabeArray) {
+                    System.out.println(s);
+                    if (Integer.parseInt(s) < fileNames.size()) {
+                        System.out.println(fileNames.get(Integer.parseInt(s)));
+                        uebergebeDaten(fileNames.get(Integer.parseInt(s)));
+                        hauptmenu();
+                    } else {
+                        System.out.println("Keine Korrekte Eingabe bitte erneut versuchen! Format 1-5 wird benötigt!");
+                        System.out.println("");
+                        System.out.print("Eingabe:");
+                        loop = -1;
+                    }
+                }
+            }
+            else {
+                System.out.println("Keine Korrekte Eingabe bitte erneut versuchen! Format .md wird benötigt!");
+                System.out.println("");
+                System.out.print("Eingabe:");
+
+            }
+        }
+    }
+
+
+    public void uebergebeDaten(String eingabe) {
         IOWriter ioWriter = new IOWriter();
         try {
             int[][] zuErarbeitendesArray = IOWriter.readMarkdownFile(eingabe);
@@ -143,13 +214,11 @@ public class KonsolenUI extends MetrikObserver {
             dateiauswahl();
         }
 
-        if(welcheMetriken.keySet().isEmpty())
-        {
+        if (welcheMetriken.keySet().isEmpty()) {
             System.out.println("Keine Metrik ausgewählt! Von daher bin ich jetzt fertig! :-)");
-            try{
+            try {
                 Thread.sleep(2000);
-            }
-            catch(InterruptedException io){
+            } catch (InterruptedException io) {
 
             }
 
@@ -180,7 +249,6 @@ public class KonsolenUI extends MetrikObserver {
 
     public void checkObAllesReturnt() {
         if (welcheMetriken.equals(metrikenBerechnet)) {
-            System.out.println("Alle Metriken wurden berechnet!");
             IOWriter.write(berchneteMetriken, aktuellerDateiname);
         }
 
