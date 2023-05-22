@@ -8,11 +8,11 @@ public class ErmittleSigVar {
                 {0, 0, 0, 1},
                 {0, 0, 1, 0},
                 {0, 1, 0, 0},
-                {0, 1, 1, 0},
-                {1, 0, 0, 1},
-                {1, 0, 1, 0},
+                {0, 1, 1, 1},
+                {1, 0, 0, 0},
+                {1, 0, 1, 1},
                 {1, 1, 0, 1},
-                {1, 1, 1, 0}
+                {1, 1, 1, 1}
         };
 
         ErmittleSigVar esv = new ErmittleSigVar();
@@ -24,7 +24,7 @@ public class ErmittleSigVar {
     public int[][] ermittleSignifikanteVariablen(int[][] aufgabe)
     {
 
-        int counter = 1;
+        int counter = 0;
         int[][] vars = new int[aufgabe.length][aufgabe[0].length-1];
         int[][] vars2 = new int[aufgabe.length][aufgabe[0].length-1];
         int[][] aufgabe2 = Arrays.copyOf(aufgabe, aufgabe.length);
@@ -57,12 +57,10 @@ public class ErmittleSigVar {
 
         int[][] result = new int[aufgabe.length][aufgabe[0].length-1];
 
-        int breite = aufgabe[0].length;
-        int hoehe = aufgabe.length;
-
         for(int y = 0; y < vars[0].length; y++)
         {
             counter = 1;
+            int[] checked = new int[vars.length];
             for(int x = 0; x < vars.length; x++)
             {
                 int[] target = Arrays.copyOf(vars[x], vars[x].length);
@@ -71,14 +69,19 @@ public class ErmittleSigVar {
                 if(cond[x] == cond[match])
                 {
                     result[x][y] = 0;
+                    checked[x] = 1;
+                    checked[match] = 1;
                 }
                 else
                 {
-                    result[x][y] = counter/2;
-                    result[match][y] = counter/2;
+                    if(checked[x] == 0 && checked[match] == 0){
+                    result[x][y] = counter;
+                    result[match][y] = counter;
+                    checked[x] = 1;
+                    checked[match] = 1;
                     System.out.println("match between " + x + " and " + match + " at " + y + " with counter " + counter);
                     counter++;
-                }
+                }}
             }
         }
 
