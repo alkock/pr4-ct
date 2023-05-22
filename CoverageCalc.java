@@ -5,12 +5,7 @@ public class CoverageCalc extends MetrikObserver{
         observers.add(this);
     }
 
-    public static void main(String[] args) {
-
-    }
-
-    public int ermittleMcDc(int[][] array) {
-        int count = 0;
+    public void ermittleMcDc(int[][] array) {
         array = ArrayErweitern(array);
 
         for (int i = 0; i < array.length; i++) {
@@ -27,25 +22,11 @@ public class CoverageCalc extends MetrikObserver{
                     array[i][array[i].length-1] = 1;
                 }
             }
-            if (!hatNull) {
-                count++;
-            }
         }
-
-        // Ausgabe des erweiterten Arrays
-        for (int[] row : array) {
-            for (int num : row) {
-                System.out.print(num + " ");
-            }
-            System.out.println();
-        }
-
         updateObservers(this,Metrik.MCDC, array);
-        return count;
     }
 
-    public int ermittleMMBÜ(int[][] array) {
-        int count = 0;
+    public void ermittleMMBÜ(int[][] array) {
         array = ArrayErweitern(array);
 
         for (int i = 0; i < array.length; i++) {
@@ -58,14 +39,8 @@ public class CoverageCalc extends MetrikObserver{
                     break;
                 }
             }
-
-            if (hatNull) {
-                count++;
-            }
         }
-
         updateObservers(this,Metrik.MMBÜ, array);
-        return count;
     }
 
     public static int[][] ArrayErweitern(int[][] array) {
