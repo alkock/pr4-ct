@@ -73,5 +73,16 @@ class Tests {
         target = new int[]{2, 2, 2};
         assertEquals(-1, esv.findMatch(table, target));
     }
+
+    @Test
+    void testArrayErweitern() {
+        CoverageCalc coverageCalc = new CoverageCalc();
+        int[][] array = {{0, 0}, {1, 0}, {0, 1}, {1, 1}};
+        int[][] expectedArray = {{0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {1, 1, 0}};
+
+        array = CoverageCalc.ArrayErweitern(array);
+
+        assertArrayEquals(expectedArray, array);
+    }
 }
 
