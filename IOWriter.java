@@ -29,6 +29,7 @@ public class IOWriter {
         reader = new BufferedReader(new FileReader(filePath));
         int rowIndex = 0;
 
+        int counter = 0;
         while ((line = reader.readLine()) != null) {
             if (line.contains("|")) {
                 String[] cells = line.split("\\|");
@@ -40,10 +41,12 @@ public class IOWriter {
                     if (cellValue.matches("-?\\d+")) {
                         data[rowIndex][columnIndex - 1] = Integer.parseInt(cellValue);
                     }
+                    else if(counter != 0 && counter != 1) throw new IllegalArgumentException("Die Wahrheitstabellen dürfen nur numerische Werte enthalten!");
                 }
 
                 rowIndex++;
             }
+            ++counter;
         }
 
         reader.close();
