@@ -74,15 +74,15 @@ public class ErmittleSigVar{
             }
         }
 
-//        System.out.println("result: ");
-//        for(int i = 0; i < result.length; i++)
-//        {
-//            for(int j = 0; j < result[0].length; j++)
-//            {
-//                System.out.print(result[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+        System.out.println("result: ");
+        for(int i = 0; i < result.length; i++)
+        {
+            for(int j = 0; j < result[0].length; j++)
+            {
+                System.out.print(result[i][j] + " ");
+            }
+            System.out.println();
+        }
         return result;
     }
 
