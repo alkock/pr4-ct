@@ -2,21 +2,21 @@ import java.util.Arrays;
 
 public class ErmittleSigVar{
 
-
-    public static void main(String[] args) {
-        int[][] table = {
-                {0, 0, 0, 1},
-                {0, 0, 1, 0},
-                {0, 1, 0, 0},
-                {0, 1, 1, 1},
-                {1, 0, 0, 0},
-                {1, 0, 1, 1},
-                {1, 1, 0, 1},
-                {1, 1, 1, 1}
-        };
-        ErmittleSigVar esv = new ErmittleSigVar();
-        esv.ermittleSignifikanteVariablen(table);
-    }
+//
+//    public static void main(String[] args) {
+//        int[][] table = {
+//                {0, 0, 0, 1},
+//                {0, 0, 1, 0},
+//                {0, 1, 0, 0},
+//                {0, 1, 1, 1},
+//                {1, 0, 0, 0},
+//                {1, 0, 1, 1},
+//                {1, 1, 0, 1},
+//                {1, 1, 1, 1}
+//        };
+//        ErmittleSigVar esv = new ErmittleSigVar();
+//        esv.ermittleSignifikanteVariablen(table);
+//    }
 
     public int[][] ermittleSignifikanteVariablen(int[][] aufgabe)
     {
