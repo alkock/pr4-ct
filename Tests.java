@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -83,6 +84,60 @@ class Tests {
         array = CoverageCalc.ArrayErweitern(array);
 
         assertArrayEquals(expectedArray, array);
+    }
+
+
+    @Test
+    public void testReadMarkdownFile() {
+        try {
+            int[][] result = IOWriter.readMarkdownFile("exercise1.md");
+            int[][] expected = {
+                    {0, 0, 0, 1},
+                    {1, 0, 0, 0},
+                    {0, 1, 0, 0},
+                    {1, 1, 0, 0},
+                    {0, 0, 1, 1},
+                    {1, 0, 1, 0},
+                    {0, 1, 1, 1},
+                    {1, 1, 1, 0}
+            };
+
+            assertArrayEquals(expected, result);
+        } catch (IOException e) {
+            fail("File not found.");
+        }
+    }
+
+    @Test
+    public void testCountOccurrences() {
+        int result = IOWriter.countOccurrences("hello world", 'l');
+        assertEquals(3, result);
+    }
+
+    @Test
+    public void testWrite() {
+        // This test will be difficult to implement because the write() function does not return anything
+        // and it has side effects. You would have to read the file it outputs and compare it to an expected output file.
+    }
+
+    @Test
+    public void testReadMarkdownTable() {
+        try {
+            String[][] result = IOWriter.readMarkdownTable("exercise2.md");
+            String[][] expected =   {{"A0", "A1", "A2", "B"},
+            {"--", "--", "--", "--"},
+            {"0", "0", "0", "0"},
+            {"1", "0", "0", "0"},
+            {"0", "1", "0", "0"},
+            {"1", "1", "0", "0"},
+            {"0", "0", "1", "0"},
+            {"1", "0", "1", "1"},
+            {"0", "1", "1", "1"},
+            {"1", "1", "1", "0"}};  // Set your expected result
+            assertArrayEquals(expected, result);
+        } catch (Exception e) {
+            fail("Error reading the file.");
+        }
     }
 }
 

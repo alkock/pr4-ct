@@ -81,10 +81,6 @@ public class IOWriter {
                 ergebnis[i][j] = ursprung[i][j];
             }
         }
-
-
-
-
         int counter2 = 0;
 
         for (Metrik metrik : errechneteMetriken.keySet()) {
@@ -100,12 +96,8 @@ public class IOWriter {
             }
             ++counter2;
         }
-
-
         String resultdateiname = dateiname.replace(".md", "_result.md");
         writeMarkdownTableToFile(ergebnis, resultdateiname);
-
-
     }
 
 
