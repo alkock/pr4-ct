@@ -173,12 +173,14 @@ public class KonsolenUI extends MetrikObserver {
             {
                 loop = 1;
                 String[] eingabeArray = eingabe.split(",");
+                boolean korrekt = false;
                 for (String s : eingabeArray) {
                     System.out.println(s);
                     if (Integer.parseInt(s) < fileNames.size()) {
                         System.out.println(fileNames.get(Integer.parseInt(s)));
+                        aktuellerDateiname = fileNames.get(Integer.parseInt(s));
                         uebergebeDaten(fileNames.get(Integer.parseInt(s)));
-                        hauptmenu();
+                        korrekt = true;
                     } else {
                         System.out.println("Keine Korrekte Eingabe bitte erneut versuchen! Format 1-5 wird benötigt!");
                         System.out.println("");
@@ -186,9 +188,12 @@ public class KonsolenUI extends MetrikObserver {
                         loop = -1;
                     }
                 }
+                if(korrekt) {
+                    hauptmenu();
+                }
             }
             else {
-                System.out.println("Keine Korrekte Eingabe bitte erneut versuchen! Format .md wird benötigt!");
+                System.out.println("Keine Korrekte Eingabe bitte erneut versuchen! Format 1-5 wird benötigt!");
                 System.out.println("");
                 System.out.print("Eingabe:");
 

@@ -14,21 +14,18 @@ public class IOWriter {
         int rowCount = 0;
         int columnCount = 0;
 
-        // Find the number of rows and columns in the markdown table
         while ((line = reader.readLine()) != null) {
             if (line.contains("|")) {
                 String[] cells = line.split("\\|");
-                columnCount = Math.max(columnCount, cells.length - 1); // Exclude the first and last empty cells
+                columnCount = Math.max(columnCount, cells.length - 1);
                 rowCount++;
             }
         }
 
         reader.close();
 
-        // Create the int[][] array with the correct dimensions
         int[][] data = new int[rowCount][columnCount];
 
-        // Read the markdown table again to populate the data array
         reader = new BufferedReader(new FileReader(filePath));
         int rowIndex = 0;
 
@@ -127,12 +124,10 @@ public class IOWriter {
 
     public static String[][] readMarkdownTable(String filePath) {
         List<String[]> lines = new ArrayList<>();
-
+        System.out.println(filePath);
         try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
             stream.forEach(line -> {
-                // Split the line at the pipe characters, trimming whitespace
                 String[] parts = line.split("\\s*\\|\\s*");
-                // Remove empty strings at the start and end, caused by leading/trailing pipe characters
                 parts = Arrays.stream(parts)
                         .filter(part -> !part.isEmpty())
                         .toArray(String[]::new);
@@ -141,8 +136,6 @@ public class IOWriter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // Convert the list of lines to a 2D array
         String[][] table = new String[lines.size()][];
         for (int i = 0; i < lines.size(); i++) {
             table[i] = lines.get(i);
