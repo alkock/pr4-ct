@@ -9,16 +9,8 @@ public class CoverageCalc extends MetrikObserver{
         array = ArrayErweitern(array);
 
         for (int i = 0; i < array.length; i++) {
-            boolean hatNull = false;
-
             for (int j = 0; j < array[i].length-1; j++) {
-                if (array[i][j] == 0) {
-                    hatNull = true;
-                    array[i][array[i].length-1] = 0;
-                    break;
-                }
-                if(!hatNull)
-                {
+                if (array[i][j] == 1) {
                     array[i][array[i].length-1] = 1;
                 }
             }
