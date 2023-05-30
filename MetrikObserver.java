@@ -3,7 +3,7 @@ import java.util.List;
 
 public abstract class MetrikObserver {
 
-    static List<MetrikObserver> observers = new ArrayList<MetrikObserver>();
+    public static List<MetrikObserver> observers = new ArrayList<MetrikObserver>();
 
 
     public abstract void update(MetrikObserver vonWem, Metrik metrik, int[][] aufgabe);

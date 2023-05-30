@@ -16,20 +16,25 @@ public class TesteCoverage extends MetrikObserver{
     public TesteCoverage() {
         observers.add(this);
         cc = new CoverageCalc();
+        observers.add(cc);
     }
 
 @Test
     public void test(){
-        update(this, Metrik.MCDC, new int[][]{{0,0,0,1},{0,0,1,0},{0,1,0,0},{0,1,1,1},{1,0,0,0},{1,0,1,1},{1,1,0,1},{1,1,1,1}});
+        MetrikObserver.updateObservers(this, Metrik.MCDC, new int[][]{{0,0,0,1},{0,0,1,0},{0,1,0,0},{0,1,1,1},{1,0,0,0},{1,0,1,1},{1,1,0,1},{1,1,1,1}});
+    MetrikObserver.updateObservers(this, Metrik.MMBÜ, new int[][]{{0,0,0,1},{0,0,1,0},{0,1,0,0},{0,1,1,1},{1,0,0,0},{1,0,1,1},{1,1,0,1},{1,1,1,1}});
+
+    //assert Exception
+
     }
 
     @Override
     public void update(MetrikObserver vonWem, Metrik metrik, int[][] aufgabe) {
         if(metrik == Metrik.MCDC && vonWem != this)
         {
-
             ergebnis = aufgabe;
         }
+
 
     }
 

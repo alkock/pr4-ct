@@ -5,6 +5,8 @@ public class CoverageCalc extends MetrikObserver{
         observers.add(this);
     }
 
+
+
     public void ermittleMcDc(int[][] array) {
         array = ArrayErweitern(array);
 
@@ -57,7 +59,13 @@ public class CoverageCalc extends MetrikObserver{
 
     @Override
     public void update(MetrikObserver vonWem, Metrik metrik, int[][] aufgabe) {
-        if (vonWem == this) return;
+        System.out.println("CoverageCalc.update()");
+        System.out.println("vonWem = " + vonWem);
+        //wenn coveragecalc class return
+        if (vonWem.getClass() == CoverageCalc.class)
+        {
+            return;
+        }
 
         ErmittleSigVar esv = new ErmittleSigVar();
         int[][] sigVar = esv.ermittleSignifikanteVariablen(aufgabe);
