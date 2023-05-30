@@ -176,5 +176,25 @@ class Tests {
         kui.update(kui, Metrik.MCDC, aufgabe);
 
     }
+
+
+    @Test
+    public void konsolenUIUpdateMetriken()
+    {
+        KonsolenUI ui = new KonsolenUI();
+        ui.aktuellerDateiname ="exercise1.md";
+        ui.checkObAllesReturnt();
+    }
+
+
+    @Test
+    public void checkeObAllesRetuntMitUpdate()
+    {
+        KonsolenUI ui = new KonsolenUI();
+        ui.aktuellerDateiname ="exercise1.md";
+        assertEquals(ui.metrikenBerechnet.get(Metrik.MMBÜ), false);
+        ui.checkObAllesReturnt();
+    }
+
 }
 
