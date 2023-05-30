@@ -157,5 +157,24 @@ class Tests {
         Metrik metrik = Metrik.EBÜ;
         assertEquals("EBÜ", Metrik.toString(metrik));
     }
+
+    @Test
+    public void testeMCDCCoverage()
+    {
+
+        int[][] aufgabe = {
+                {0, 0, 0, 1},
+                {0, 0, 1, 0},
+                {0, 1, 0, 0},
+                {0, 1, 1, 1},
+                {1, 0, 0, 0},
+                {1, 0, 1, 1},
+                {1, 1, 0, 1},
+                {1, 1, 1, 1}};
+        KonsolenUI kui = new KonsolenUI();
+        CoverageCalc cc = new CoverageCalc();
+        kui.update(kui, Metrik.MCDC, aufgabe);
+
+    }
 }
 
