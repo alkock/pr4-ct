@@ -139,5 +139,23 @@ class Tests {
             fail("Error reading the file.");
         }
     }
+
+    @Test
+    public void useMetrik_MCDC() {
+        Metrik metrik = Metrik.MCDC;
+        assertEquals("MCDC", Metrik.toString(metrik));
+    }
+
+    @Test
+    public void useMetrik_MMBÜ() {
+        Metrik metrik = Metrik.MMBÜ;
+        assertEquals("MMBÜ", Metrik.toString(metrik));
+    }
+
+    @Test
+    public void useMetrik_EBÜ() {
+        Metrik metrik = Metrik.EBÜ;
+        assertEquals("EBÜ", Metrik.toString(metrik));
+    }
 }
 
