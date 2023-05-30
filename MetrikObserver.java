@@ -8,9 +8,6 @@ public abstract class MetrikObserver {
 
     public abstract void update(MetrikObserver vonWem, Metrik metrik, int[][] aufgabe);
 
-    public void subscribe(MetrikObserver observer) {
-        observers.add(observer);
-    }
 
     public static void updateObservers(MetrikObserver duSelber, Metrik metrik, int[][] aufgabe) {
         for (MetrikObserver observer : observers) {
